@@ -70,22 +70,6 @@ public class BookController
 			.collect(Collectors.toList());
 	}
 	
-	@Get("/clear")
-	public HttpResponse<?> clearBooks()
-	{
-		// Enter your code here
-		
-		return HttpResponse.ok("Books successfully cleared!");
-	}
-	
-	@Get("/updateSingle")
-	public HttpResponse<?> updateSingleBook()
-	{
-		// Enter your code here
-		
-		return HttpResponse.ok("Book successfully updated!");
-	}
-	
 	@Get("/updateMulti")
 	public HttpResponse<?> updateMultiBooks()
 	{
