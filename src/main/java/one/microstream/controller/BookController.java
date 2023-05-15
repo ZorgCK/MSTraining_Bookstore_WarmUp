@@ -36,14 +36,8 @@ public class BookController
 		return HttpResponse.ok("Book successfully created!");
 	}
 	
-	@Get
-	public List<Book> getBook()
-	{
-		// Enter your code here
-	}
-	
-	@Get("/startsWith_A")
-	public List<Book> getBooksStartsWithA()
+	@Get("/ISBNstartsWith_1")
+	public List<Book> ISBNstartsWith1()
 	{
 		// Enter your code here
 	}
