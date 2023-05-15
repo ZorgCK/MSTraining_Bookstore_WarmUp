@@ -11,6 +11,8 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import one.microstream.domain.Author;
 import one.microstream.domain.Book;
+import one.microstream.persistence.types.Storer;
+import one.microstream.persistence.util.Reloader;
 import one.microstream.reference.Lazy;
 import one.microstream.storage.DB;
 import one.microstream.utils.MockupUtils;
@@ -73,7 +75,29 @@ public class BookController
 	@Get("/updateMulti")
 	public HttpResponse<?> updateMultiBooks()
 	{
-		// Enter your code here
+		Storer ls = DB.storageManager.createLazyStorer();
+		
+		List<Book> isbNstartsWith1 = ISBNstartsWith1();
+		
+		try
+		{
+			isbNstartsWith1.forEach(b ->
+			{
+				b.setPrice(new BigDecimal(50.00));
+				ls.store(b);
+			});
+			
+			ls.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			
+			Reloader reloader = Reloader.New(DB.storageManager.persistenceManager());
+			
+			isbNstartsWith1.forEach(b -> reloader.reloadFlat(b));
+			return HttpResponse.serverError("Update books failed. All changes are rollbacked" + e.getMessage());
+		}
 		
 		return HttpResponse.ok("Bookss successfully updated!");
 	}
