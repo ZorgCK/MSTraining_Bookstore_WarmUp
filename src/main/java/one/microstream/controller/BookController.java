@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
@@ -27,7 +28,8 @@ public class BookController
 		{
 			DB.root.getBooks().computeIfAbsent(
 				b.getIsbn().substring(0, 2),
-				k -> Lazy.Reference(new ArrayList<>())).get().add(b);
+				k -> Lazy.Reference(new ArrayList<>()))
+			.get().add(b);
 			
 			DB.root.getAuthors().computeIfAbsent(
 				b.getAuthor().getId() + ":" + b.getAuthor().getEmail() + ":" + b.getAuthor().getLastname(),
@@ -47,7 +49,8 @@ public class BookController
 		
 		DB.root.getBooks().computeIfAbsent(
 			book.getIsbn().substring(0, 2),
-			k -> Lazy.Reference(new ArrayList<>())).get().add(book);
+			k -> Lazy.Reference(new ArrayList<>()))
+		.get().add(book);
 		
 		DB.root.getAuthors().computeIfAbsent(
 			book.getAuthor().getId() + ":" + book.getAuthor().getEmail() + ":" + book.getAuthor().getLastname(),
@@ -57,17 +60,14 @@ public class BookController
 		
 		return HttpResponse.ok("Book successfully created!");
 	}
-	
-	@Get
-	public List<Book> getBooks()
+
+	@Get("/ISBNstartsWith_1")
+	public List<Book> ISBNstartsWith1()
 	{
-		// Enter your code here
-	}
-	
-	@Get("/startsWith_A")
-	public List<Book> getBooksStartsWithA()
-	{
-		// Enter your code here
+		return DB.root.getBooks().entrySet().stream()
+			.filter(s -> s.getKey().startsWith("1"))
+			.flatMap(e -> e.getValue().get().stream())
+			.collect(Collectors.toList());
 	}
 	
 	@Get("/clear")
