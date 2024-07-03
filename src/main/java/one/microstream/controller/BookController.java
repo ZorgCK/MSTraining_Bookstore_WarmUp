@@ -6,14 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.eclipse.serializer.persistence.types.Storer;
+import org.eclipse.serializer.persistence.util.Reloader;
+import org.eclipse.serializer.reference.Lazy;
+
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import one.microstream.domain.Author;
 import one.microstream.domain.Book;
-import one.microstream.persistence.types.Storer;
-import one.microstream.persistence.util.Reloader;
-import one.microstream.reference.Lazy;
 import one.microstream.storage.DB;
 import one.microstream.utils.MockupUtils;
 

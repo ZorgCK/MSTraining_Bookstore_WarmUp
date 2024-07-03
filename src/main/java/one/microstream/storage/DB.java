@@ -2,11 +2,12 @@ package one.microstream.storage;
 
 import java.time.Duration;
 
+import org.eclipse.serializer.reference.Lazy;
+import org.eclipse.serializer.reference.LazyReferenceManager;
+import org.eclipse.store.storage.embedded.configuration.types.EmbeddedStorageConfiguration;
+import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager;
+
 import one.microstream.domain.Root;
-import one.microstream.reference.Lazy;
-import one.microstream.reference.LazyReferenceManager;
-import one.microstream.storage.embedded.configuration.types.EmbeddedStorageConfiguration;
-import one.microstream.storage.embedded.types.EmbeddedStorageManager;
 
 
 public class DB
